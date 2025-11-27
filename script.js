@@ -372,3 +372,4 @@ window.addEmoji = addEmoji;
 window.showDayDetails = showDayDetails;
 
 // --- End of file ---------------------------------------------------------
+
