@@ -1,35 +1,112 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Planner Bruna</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8" />
+<title>Meu Planner</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; }
+  h1 { font-size: 32px; margin-bottom: 10px; }
+  #frase-do-dia { font-size: 20px; font-style: italic; margin-bottom: 30px; }
+
+  /* Monthly calendar */
+  #monthly-container { width: 100%; max-width: 900px; }
+  .month-grid { display: grid; grid-template-columns: repeat(7, 1fr); border: 1px solid #ddd; }
+  .day-header { background: #f4f4f4; padding: 8px; text-align: center; font-weight: bold; border: 1px solid #eee; }
+  .day-cell { min-height: 90px; border: 1px solid #eee; padding: 5px; font-size: 14px; position: relative; }
+  .day-number { font-weight: bold; }
+
+  /* Weekly table */
+  #weekly-table { width: 100%; max-width: 900px; border-collapse: collapse; margin-top: 40px; }
+  #weekly-table th, #weekly-table td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+  #weekly-table th { background: #f7f7f7; }
+</style>
 </head>
 <body>
-  <div id="app">
-    <h1>Planner Diário</h1>
-    <div class="daily">
-      <input id="daily-input" placeholder="Adicionar tarefa do dia..." />
-      <button onclick="addDaily()">+</button>
-      <ul id="daily-list"></ul>
-    </div>
+  <h1>Meu Planner</h1>
 
-    <h1>Planner Mensal</h1>
-    <div id="monthly"></div>
+  <div id="frase-do-dia"></div>
 
-    <h1>Calendário Anual</h1>
-    <div id="yearly"></div>
+  <h2>Calendário Mensal</h2>
+  <div id="monthly-container"></div>
 
-    <h2>Gerenciar Emojis</h2>
-    <div class="emoji-box">
-      <input id="emoji-name" placeholder="Nome da categoria" />
-      <input id="emoji-symbol" placeholder="Emoji" />
-      <button onclick="addEmoji()">Adicionar</button>
-      <ul id="emoji-list"></ul>
-    </div>
-  </div>
+  <h2>Planner Semanal</h2>
+  <table id="weekly-table">
+    <tr>
+      <th>Dia</th>
+      <th>Atividades</th>
+      <th>Status</th>
+    </tr>
+    <tr><td>Segunda</td><td></td><td></td></tr>
+    <tr><td>Terça</td><td></td><td></td></tr>
+    <tr><td>Quarta</td><td></td><td></td></tr>
+    <tr><td>Quinta</td><td></td><td></td></tr>
+    <tr><td>Sexta</td><td></td><td></td></tr>
+    <tr><td>Sábado</td><td></td><td></td></tr>
+    <tr><td>Domingo</td><td></td><td></td></tr>
+  </table>
 
-  <script src="script.js"></script>
+<script>
+// Frases do dia
+const frases = [
+  "Você é mais forte do que imagina.",
+  "Passo a passo, você chega lá.",
+  "A disciplina constrói o futuro.",
+  "Seja gentil consigo hoje.",
+  "O importante é não desistir."
+];
+function atualizarFrase() {
+  const hoje = new Date();
+  const idx = hoje.getDate() % frases.length;
+  document.getElementById('frase-do-dia').textContent = frases[idx];
+}
+
+// Calendário mensal estilo Notion
+function criarCalendario() {
+  const container = document.getElementById('monthly-container');
+  container.innerHTML = '';
+
+  const hoje = new Date();
+  const ano = hoje.getFullYear();
+  const mes = hoje.getMonth();
+
+  const primeiroDia = new Date(ano, mes, 1);
+  const ultimoDia = new Date(ano, mes + 1, 0);
+  const inicioSemana = primeiroDia.getDay(); // 0=dom
+
+  const grid = document.createElement('div');
+  grid.className = 'month-grid';
+
+  const headers = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'];
+  headers.forEach(h => {
+    const dh = document.createElement('div');
+    dh.className = 'day-header';
+    dh.textContent = h;
+    grid.appendChild(dh);
+  });
+
+  for (let i = 0; i < inicioSemana; i++) {
+    const empty = document.createElement('div');
+    empty.className = 'day-cell';
+    grid.appendChild(empty);
+  }
+
+  for (let d = 1; d <= ultimoDia.getDate(); d++) {
+    const cell = document.createElement('div');
+    cell.className = 'day-cell';
+
+    const num = document.createElement('div');
+    num.className = 'day-number';
+    num.textContent = d;
+
+    cell.appendChild(num);
+    grid.appendChild(cell);
+  }
+
+  container.appendChild(grid);
+}
+
+atualizarFrase();
+criarCalendario();
+</script>
 </body>
 </html>
