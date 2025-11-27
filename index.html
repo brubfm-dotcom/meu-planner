@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planner Bruna</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <h1>Planner Diário</h1>
+    <div class="daily">
+      <input id="daily-input" placeholder="Adicionar tarefa do dia..." />
+      <button onclick="addDaily()">+</button>
+      <ul id="daily-list"></ul>
+    </div>
+
+    <h1>Planner Mensal</h1>
+    <div id="monthly"></div>
+
+    <h1>Calendário Anual</h1>
+    <div id="yearly"></div>
+
+    <h2>Gerenciar Emojis</h2>
+    <div class="emoji-box">
+      <input id="emoji-name" placeholder="Nome da categoria" />
+      <input id="emoji-symbol" placeholder="Emoji" />
+      <button onclick="addEmoji()">Adicionar</button>
+      <ul id="emoji-list"></ul>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
